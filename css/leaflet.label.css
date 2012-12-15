@@ -1,0 +1,12 @@
+.leaflet-label {
+	background: white;
+	padding: 8px;
+	box-shadow: 0 3px 10px #888;
+	-moz-box-shadow: 0 3px 10px #888;
+	-webkit-box-shadow: 0 3px 14px #999;
+	-moz-border-radius: 20px;
+	-webkit-border-radius: 20px;
+	border-radius: 20px;
+}
+
+
