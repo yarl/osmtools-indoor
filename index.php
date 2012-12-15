@@ -17,6 +17,7 @@
     <!-- Leaflet -->
     <link rel="stylesheet" href="js/leaflet/leaflet.css" />
     <!--[if lte IE 8]><link rel="stylesheet" href="js/leaflet/leaflet.ie.css" /><![endif]-->
+    <link rel="stylesheet" href="css/leaflet.label.css" />
     <script src="http://leafletjs.com/dist/leaflet.js"></script>
     
     <link rel="stylesheet" href="js/leaflet/MarkerCluster.css" />
@@ -27,6 +28,12 @@
     <script src="js/leaflet/leaflet-hash.js"></script>
     <script src="js/leaflet/leaflet-geoloc.js"></script>
     <script src="js/leaflet/leaflet-fullscreen.js"></script>
+
+    <script src="js/leaflet.label/Label.js"></script>
+    <script src="js/leaflet.label/Marker.Label.js"></script>
+    <script src="js/leaflet.label/Path.Label.js"></script>
+    <script src="js/leaflet.label/Map.Label.js"></script>
+    <script src="js/leaflet.label/FeatureGroup.Label.js"></script>
     
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="js/geo.js"></script>

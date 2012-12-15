@@ -255,6 +255,7 @@ building.room = function(id, coords, name) {
     this.shop;      // value of amenity=* or shop=*
     
     this.polygon;
+    this.logo;
     
     /** Draw room **/
     this.draw = function(room) {
@@ -271,9 +272,20 @@ building.room = function(id, coords, name) {
             clickable: room.clickable(room),
             weight: room.weight(room),
             color: room.color(room),
-            fillOpacity: 0.4
-        }).bindPopup(txt);
+            fillOpacity: 0.4,
+        }).bindLabel(room.name).bindPopup(txt);
         api.layer.building.addLayer(room.polygon);
+
+	room.logo = L.marker(room.center(room),
+                            {draggable:true,
+                             icon: L.icon({
+                                   iconUrl: 'img/logo/'+room.name+'.png',
+                                   iconSize: [36, 36],
+                                   iconAnchor: [18, 18],
+                                   popupAnchor: [0, -18],
+                                   labelAnchor: [14, 0]})
+	                     }).bindLabel(room.name).bindPopup(txt);;
+        api.layer.building.addLayer(room.logo);
     }
     
     /** Color for room **/
