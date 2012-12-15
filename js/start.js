@@ -276,7 +276,11 @@ building.room = function(id, coords, name) {
         }).bindLabel(room.name).bindPopup(txt);
         api.layer.building.addLayer(room.polygon);
 
-	room.logo = L.marker(room.center(room),
+	var request = $.ajax({
+		type: "HEAD",
+		url: 'img/logo/'+room.name+'.png',
+		success: function () {
+			room.logo = L.marker(room.center(room),
                             {draggable:true,
                              icon: L.icon({
                                    iconUrl: 'img/logo/'+room.name+'.png',
@@ -284,8 +288,11 @@ building.room = function(id, coords, name) {
                                    iconAnchor: [18, 18],
                                    popupAnchor: [0, -18],
                                    labelAnchor: [14, 0]})
-	                     }).bindLabel(room.name).bindPopup(txt);;
-        api.layer.building.addLayer(room.logo);
+	                     }).bindLabel(room.name).bindPopup(txt);
+		        api.layer.building.addLayer(room.logo);
+		}
+	});
+
     }
     
     /** Color for room **/
