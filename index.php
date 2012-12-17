@@ -22,8 +22,10 @@
     <link rel="stylesheet" href="js/leaflet/MarkerCluster.css" />
     <link rel="stylesheet" href="js/leaflet/MarkerCluster.Default.css" />
     <!--[if lte IE 8]><link rel="stylesheet" href="js/leaflet/MarkerCluster.Default.ie.css" /><![endif]-->
+    <link rel="stylesheet" href="js/leaflet/leaflet.label.css" />
     
     <script src="js/leaflet/leaflet.markercluster.js"></script>
+    <script src="js/leaflet/leaflet.label.js"></script>
     <script src="js/leaflet/leaflet-hash.js"></script>
     <script src="js/leaflet/leaflet-geoloc.js"></script>
     <script src="js/leaflet/leaflet-fullscreen.js"></script>
@@ -83,6 +85,19 @@
             <br clear="all" />
             <!-- Map -->
             <div id="map-container">
+                <div id="indoor-window" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="indoor-window" aria-hidden="true">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="indoor-window-header"></h3>
+                    </div>
+                    <div class="modal-body" id="indoor-window-text">
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" id="indoor-window-josm">Edytuj w JOSM</button>
+                        <a class="btn" id="indoor-window-link" href="#" target="_blank">Zobacz w OpenStreetMap</a>
+                        <button class="btn btn-primary" id="indoor-window-close" data-dismiss="modal" aria-hidden="true">Zamknij</button>
+                    </div>
+                </div>
                 <div id="map"></div>
             </div>
             

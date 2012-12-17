@@ -272,7 +272,30 @@ building.room = function(id, coords, name) {
             weight: room.weight(room),
             color: room.color(room),
             fillOpacity: 0.4
-        }).bindPopup(txt);
+        }).bindLabel('<span style="color:'+ room.color(room, 'all') +'">■</span> ' + room.name);
+          
+        room.polygon.on('click', function(e) {
+            $('#indoor-window-header').html(room.name);
+            $('#indoor-window-text').html(room.category);
+            $("#indoor-window-link").attr("href", "http://www.openstreetmap.org/browse/way/" + room.id);
+
+            var href = "http://localhost:8111/load_and_zoom";
+                href += "?left=" + room.polygon.getBounds().getSouthWest().lng;
+                href += "&right=" + room.polygon.getBounds().getNorthEast().lng;
+                href += "&top=" + room.polygon.getBounds().getNorthEast().lat;
+                href += "&bottom=" + room.polygon.getBounds().getSouthWest().lat;
+                href += "&select=way" + room.id;
+
+            $("#indoor-window-josm").click(function(){
+                if (document.exitFullscreen) document.exitFullscreen();
+                else if (document.mozCancelFullScreen) document.mozCancelFullScreen();
+                else if (document.webkitCancelFullScreen) document.webkitCancelFullScreen();
+                $('#josm-iframe').attr("src", href);
+            });
+
+            $('#indoor-window').modal();
+        });
+
         api.layer.building.addLayer(room.polygon);
     }
     
