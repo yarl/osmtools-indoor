@@ -231,7 +231,7 @@ building.level = function(id, level, rooms) {
         
         var txt = '';
         for(var i in level.rooms)
-            if(level.rooms[i].name != null)
+            if(level.rooms[i] != null && level.rooms[i].name != null)
                 if(api.building.currentType == 'all' || level.rooms[i].category == api.building.currentType) 
                     txt += '<div class="indoor-list-room" onclick="api.building.popup('+level.id+','+i+')"><span style="color:'+ level.rooms[i].color(level.rooms[i], 'all') +'">■</span> ' + level.rooms[i].name + '</div>';
         return txt;
@@ -240,8 +240,9 @@ building.level = function(id, level, rooms) {
     /** Draw level **/
     this.draw = function(level) {
         api.layer.building.clearLayers();
-        for(var i in level.rooms)
-            level.rooms[i].draw(level.rooms[i]);
+        for(var i in level.rooms) 
+            if(level.rooms[i] != null)
+                level.rooms[i].draw(level.rooms[i]);
     }
 }
 
