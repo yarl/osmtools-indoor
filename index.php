@@ -1,4 +1,15 @@
 <!DOCTYPE html>
+<?php
+    include('i18n.php');
+    function __($token) {
+        global $translation;
+        $lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+        if (!array_key_exists($token, $translation) || !array_key_exists($lang, $translation[$token]))
+            return $token;
+        else
+            return $translation[$token][$lang];
+    }
+?>
 <html lang="pl">
   <head>
     <meta charset="utf-8">
@@ -30,9 +41,8 @@
     <script src="js/leaflet/leaflet-geoloc.js"></script>
     <script src="js/leaflet/leaflet-fullscreen.js"></script>
     
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script src="js/geo.js"></script>
-    <script src="js/gears_init.js"></script>
+    <script src="js/jquery-latest.js"></script>
+    <script src="js/jquery.cookie.js"></script>
   </head>
 
   <body>  
@@ -44,23 +54,23 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="index.php"><img src="img/logo.png" alt="OpenStreetMap Polska" />/indoor<sup>beta</sup></a>
+          <a class="brand" href="."><img src="img/logo.png" alt="OpenStreetMap Polska" /><span>/indoor<sup>beta</sup></span></a>
           <div class="nav-collapse collapse">
             <ul class="nav">
               <li><a id="about" rel="popover" 
                      data-placement="bottom" 
                      data-content='<a href="http://wiki.openstreetmap.org/wiki/IndoorOSM">Opis modelu Indoor Mapping</a>'
-                     data-original-title="Informacje">Informacje</a>
+                     data-original-title="<?php echo __('Info'); ?>"><?php echo __('Info'); ?></a>
               </li>
               <li><a id="contact" rel="popover" 
                      data-placement="bottom" 
                      data-content='Autor: <a href="http://www.openstreetmap.org/user/Yarl" alt="Kontakt">user:Yarl</a>'
-                     data-original-title="Kontakt">Kontakt</a>
+                     data-original-title="<?php echo __('Contact'); ?>"><?php echo __('Contact'); ?></a>
               </li>
             </ul>
             <ul class="nav pull-right">
               <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Więcej <b class="caret"></b></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo __('More'); ?> <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                   <li><a href="http://osmapa.pl/">osmapa.pl</a></li>
                   <li><a href="http://osmapa.pl/w">osmapa.pl/w</a></li>
@@ -80,8 +90,8 @@
 
     <div class="row">
         <!-- MAP -->
-        <div class="span10">
-            <h3>Mapa</h3>
+        <div class="span12" id="indoor-map">
+            <h3><?php echo __('Map'); ?></h3>
             <br clear="all" />
             <!-- Map -->
             <div id="map-container">
@@ -93,49 +103,63 @@
                     <div class="modal-body" id="indoor-window-text">
                     </div>
                     <div class="modal-footer">
-                        <button class="btn" id="indoor-window-josm">Edytuj w JOSM</button>
-                        <a class="btn" id="indoor-window-link" href="#" target="_blank">Zobacz w OpenStreetMap</a>
-                        <button class="btn btn-primary" id="indoor-window-close" data-dismiss="modal" aria-hidden="true">Zamknij</button>
+                        <button class="btn" id="indoor-window-josm"><?php echo __('Edit in JOSM'); ?></button>
+                        <a class="btn" id="indoor-window-link" href="#" target="_blank"><?php echo __('Open in OSM'); ?></a>
+                        <button class="btn btn-primary" id="indoor-window-close" data-dismiss="modal" aria-hidden="true"><?php echo __('Close'); ?></button>
                     </div>
                 </div>
                 <div id="map"></div>
             </div>
             
             <div style="margin-top:5px">
+                Test: 
                 <a onclick="map.setView(new L.LatLng(51.09447, 17.01945),18)">Sky Tower (Wrocław)</a> | 
                 <a onclick="map.setView(new L.LatLng(54.47471, 18.55180),17)">CH Klif (Gdynia)</a>
             </div>
-            <div class="alert alert-block" id="map-zoominfo">
-                <p>Przybliż mapę aby pobrać elementy</p>
+            <div class="alert alert-info" id="map-zoominfo">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <?php echo __('<strong>Zoom in</strong> to load buildings'); ?>
             </div>
         </div>
         
         <!-- OPTIONS -->
-        <div class="span2">
-            <h3>Nawigacja</h3>
+        <div class="span2" id="indoor-navigation">
+            <h3><?php echo __('Navigation'); ?></h3>
             <div id="indoor-levels"></div>
             <select class="input-medium" id="indoor-categories">
-                <option value="all">Wszystko</option>
-                <option value="fashion">Moda</option>
-                <option value="home">Wyposażenie domu</option>
-                <option value="electronics">Elektronika</option>
-                <option value="health">Zdrowie</option>
-                <option value="food">Spożywcze</option>
-                <option value="service">Usługi</option>
-                <option value="gastro">Gastronomia</option>
-                <option value="sport">Sport</option>
-                <option value="entertainment">Rozrywka</option>
+                <option value="all"><?php echo __('All'); ?></option>
+                <option value="Fashion"><?php echo __('Fashion'); ?></option>
+                <option value="Home"><?php echo __('Home'); ?></option>
+                <option value="Electronics"><?php echo __('Electronics'); ?></option>
+                <option value="Health"><?php echo __('Health'); ?></option>
+                <option value="Food"><?php echo __('Food'); ?></option>
+                <option value="Service"><?php echo __('Service'); ?></option>
+                <option value="Gastronomy"><?php echo __('Gastronomy'); ?></option>
+                <option value="Sport"><?php echo __('Sport'); ?></option>
+                <option value="Entertainment"><?php echo __('Entertainment'); ?></option>
+                <option value="Other"><?php echo __('Other'); ?></option>
             </select>
             <div id="indoor-rooms"></div>
         </div>
       </div>   
       <hr>
       <footer>
-          <p>2012 - <a href="http://osmtools.org">OSMTools.org</a></p>
+          <div class="row">
+            <div class="span6">
+            <p>© 2012-2013 by Yarl and <a href="https://github.com/yarl/osmtools-indoor" alt="commoters at Github">commiters</a><br />
+            <a href="http://osmtools.org">OSMTools.org</a></p>
+            </div>
+            <div class="span4" style="text-align: right">
+                <iframe src="http://ghbtns.com/github-btn.html?user=yarl&repo=osmtools-indoor&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="80" height="20"></iframe>
+                <iframe src="http://ghbtns.com/github-btn.html?user=yarl&repo=osmtools-indoor&type=fork&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="75" height="20"></iframe>
+            </div>
+          </div>
       </footer>
 
     </div> <!-- /container -->
+    
     <script src="js/start.js"></script>
+    <?php include('js/building.js.php'); ?>
     <script src="js/overpass.js"></script>
     <script src="js/bootstrap.min.js"></script>
     

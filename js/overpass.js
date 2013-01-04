@@ -18,7 +18,7 @@ api.tagShell = function() {
         boundary.getNorthWest().lat+','+boundary.getSouthEast().lng+');';
     
     var text = '('+
-        'way["buildingpart"="shell"]["building"="yes"]'+bb+
+        'way["level"="0"]["building"="yes"]'+bb+
         'rel(bw)->.relations;node(w);'+
     ');'+
     'out;';
@@ -58,10 +58,9 @@ api.loadShell = function() {
             api.layer.building.clearLayers();
             map.removeLayer(api.layer.building);
             
-            $("#indoor-rooms").css('height', '0px');
-            $('#indoor-categories').css('display', 'none');
-            $('#indoor-categories').val('all').attr('selected', true);
-            $("#indoor-levels").html('');
+            $('#indoor-navigation').css('display', 'none');     // right panel
+            $('#indoor-map').attr({"class": 'span12'});
+            map.invalidateSize();
         }
         if(!map.hasLayer(api.layer.outlines))
             map.addLayer(api.layer.outlines);
@@ -172,30 +171,30 @@ api.parseBuilding = function(data) {
             coords.push(nodes[$(this).attr("ref")]);
         });
         
-        var name, type, category, shop;
+        var name, type, category = "Other", shop;
         $(this).find('tag').each(function() {
             var key = $(this).attr("k").toLowerCase();
             var value = $(this).attr("v");
             if(key == "name") name = value;
             if(key == "buildingpart") type = value;
             if(key == "shop" && value.match(/(bag|boutique|clothes|cosmetics|jewelry|shoes)/))
-                category = "fashion";
+                category = "Fashion";
             if(key == "shop" && value.match(/(antiques|art|bathroom_furnishing|bed|carpet|curtain|doityourself|furniture|hardware|interior_decoration|kitchen|pet)/))
-                category = "home";
+                category = "Home";
             if(key == "shop" && value.match(/(computer|electronics|hifi|mobile_phone|photo)/))
-                category = "electronics"; 
+                category = "Electronics"; 
             if((key == "amenity" && value.match(/(pharmacy|clinic|fitness_center)/)) || (key == "shop" && value.match(/(baby_goods|beauty|chemist|hairdresser|massage|optician|organic|tattoo)/)))
-                category = "health";
+                category = "Health";
             if(key == "shop" && value.match(/(supermarket|alcohol|bakery|beverages|butcher|convenience|deli|herbalist)/))
-                category = "food";
+                category = "Food";
             if((key == "amenity" && value.match(/(bureau_de_change|post_office)/)) || (key == "shop" && value.match(/(books|dry_cleaning|gift)/)) || (key == "service"))
-                category = "service";
+                category = "Service";
             if(key == "amenity" && value.match(/(cafe|fast_food|food_court|ice_cream|pub|restaurant)/))
-                category = "gastro";
+                category = "Gastronomy";
             if(key == "shop" && value.match(/(bicycle|dive|outdoor|sports)/))
-                category = "sport";
+                category = "Sport";
             if((key == "amenity" && value.match(/(arts_centre|cinema|theatre)/)) || (key == "leisure" && value.match(/(sports_centre)/)))
-                category = "entertainment";
+                category = "Entertainment";
             
             if(key == "shop" && shop == null) shop = value;
             if(key == "amenity" && shop == null) shop = value;
@@ -266,7 +265,8 @@ api.parseBuilding = function(data) {
     api.building.drawLevelSwitcher();
     api.building.drawLevel(0);
     
-    $("#indoor-rooms").css('height', '440px');
-    $('#indoor-categories').css('display', 'block');
+    $('#indoor-map').attr({"class": 'span10'});
+    $('#indoor-navigation').css('display', 'block');
+    map.invalidateSize();
     $("#indoor-levels-0").button('toggle');
 } 

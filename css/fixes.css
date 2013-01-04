@@ -17,9 +17,11 @@
 }
 
 #map-zoominfo {
-    display: block;
-    margin-top: 5px;
-    margin-bottom: 0px;
+    position: fixed;
+    width: 300px;
+    top: 45px;
+    left: 50%;
+    margin-left: -150px;
 }
 
 #map-loading {
@@ -44,6 +46,10 @@
 /*
 * List
 */
+#indoor-navigation {
+    display: none;
+}
+
 #indoor-categories {
    margin-top: 5px; 
    display: none;
@@ -52,6 +58,7 @@
 #indoor-rooms {
     overflow: auto;
     margin-top: 10px;
+    height: 460px;
 }
 
 .indoor-list-room {
@@ -114,4 +121,10 @@ a:hover{
 
 hr {
     margin: 5px 0;
+}
+
+.brand span {
+    position: relative;
+    top: 5px;
+    padding-left: 5px;
 }
