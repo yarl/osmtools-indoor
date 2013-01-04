@@ -171,7 +171,7 @@ building.room = function(id, coords, name) {
           
         room.polygon.on('click', function(e) {
             $('#indoor-window-header').html(room.name);
-            $('#indoor-window-text').html("<h4>Info</h4>" + building.types[room.category]);
+            $('#indoor-window-text').html("<h4><?php echo __('Type'); ?></h4>" + building.types[room.category]);
             $("#indoor-window-link").attr("href", "http://www.openstreetmap.org/browse/way/" + room.id);
 
             var href = "http://localhost:8111/load_and_zoom";

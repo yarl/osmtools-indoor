@@ -127,7 +127,7 @@
             <h3><?php echo __('Navigation'); ?></h3>
             <div id="indoor-levels"></div>
             <select class="input-medium" id="indoor-categories">
-                <option value="all"><?php echo __('All'); ?></option>
+                <option value="All"><?php echo __('All'); ?></option>
                 <option value="Fashion"><?php echo __('Fashion'); ?></option>
                 <option value="Home"><?php echo __('Home'); ?></option>
                 <option value="Electronics"><?php echo __('Electronics'); ?></option>

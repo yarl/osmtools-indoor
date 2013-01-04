@@ -59,6 +59,7 @@ api.loadShell = function() {
             map.removeLayer(api.layer.building);
             
             $('#indoor-navigation').css('display', 'none');     // right panel
+            $('#indoor-categories').val('All').attr('selected', true);
             $('#indoor-map').attr({"class": 'span12'});
             map.invalidateSize();
         }

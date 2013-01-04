@@ -52,13 +52,12 @@
 
 #indoor-categories {
    margin-top: 5px; 
-   display: none;
 }
 
 #indoor-rooms {
     overflow: auto;
     margin-top: 10px;
-    height: 460px;
+    height: 420px;
 }
 
 .indoor-list-room {

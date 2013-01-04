@@ -1,4 +1,8 @@
 <?php
+/**
+ *  KEEP alphabetic order 
+ */
+
 $translation = array(
     /* Website */
     'Info' => array(
@@ -60,8 +64,12 @@ $translation = array(
     ), 
     
     /* Modal */
+    'Type' => array(
+        'pl' => 'Typ'
+    ),
+    
     'Edit in JOSM' => array(
-        'pl' => 'Edit in JOSM'
+        'pl' => 'Edytuj w JOSM'
     ),
     'Close' => array(
         'pl' => 'Zamknij'
@@ -75,6 +83,5 @@ $translation = array(
         'pl' => 'Wejdź',
         'de' => 'Betreten'
     )
-    
 );
 ?>
