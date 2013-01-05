@@ -6,126 +6,127 @@
 $translation = array(
     /* Website */
     'Info' => array(
-        'pl' => 'Informacje',
+        'fr' => 'Informations',
         'it' => 'Informazioni',
-        'fr' => 'Informations'
+        'pl' => 'Informacje'
     ),
     'Contact' => array(
-        'pl' => 'Kontakt',
         'de' => 'Kontakt',
+        'fr' => 'Contact',
         'it' => 'Contatti',
-        'fr' => 'Contact'
+        'pl' => 'Kontakt'
     ),
     'More' => array(
-        'pl' => 'Więcej',
         'de' => 'Mehr',
+        'fr' => 'Plus',
         'it' => 'Altro',
-        'fr' => 'Plus'
+        'pl' => 'Więcej'
     ),
     
     'Map' => array(
-        'pl' => 'Mapa',
         'de' => 'Karte',
+        'fr' => 'Carte',
         'it' => 'Mappa',
-        'fr' => 'Carte'
+        'pl' => 'Mapa'
     ),
     '<strong>Zoom in</strong> to load buildings' => array(
-        'pl' => '<strong>Przybliż mapę</strong> aby pobrać elementy',
+        'fr' => '<strong>Zoomer</strong> pour charger les bâtiments',
         'it' => '<strong>Ingrandisci lo zoom</strong> per caricare gli edifici',
-        'fr' => '<strong>Zoomer</strong> pour charger les bâtiments'
+        'pl' => '<strong>Przybliż mapę</strong> aby pobrać elementy'
     ),
     
     /* Nav */
     'Navigation' => array(
-        'pl' => 'Nawigacja',
+        'fr' => 'Navigation',
         'it' => 'Navigazione',
-        'fr' => 'Navigation'
+        'pl' => 'Nawigacja'
     ),
     'All' => array(
-        'pl' => 'Wszystko',
+        'de' => 'Tout',
+        'fr' => 'Tous',
         'it' => 'Tutti',
-        'de' => 'Tout'
+        'pl' => 'Wszystko'
     ),
     'Fashion' => array(
-        'pl' => 'Moda',
+        'fr' => 'Mode',
         'it' => 'Moda',
-        'fr' => 'Mode'
+        'pl' => 'Moda'
     ),
     'Home' => array(
-        'pl' => 'Wyposażenie domu',
+        'fr' => 'Maison',
         'it' => 'Casa',
-        'fr' => 'Maison'
+        'pl' => 'Wyposażenie domu',
     ),
     'Electronics' => array(
-        'pl' => 'Elektronika',
+        'fr' => 'Electronique',
         'it' => 'Elettronica',
-        'fr' => 'Electronique'
+        'pl' => 'Elektronika',
     ),
     'Health' => array(
-        'pl' => 'Zdrowie',
+        'fr' => 'Santé',
         'it' => 'Salute',
-        'fr' => 'Santé'
+        'pl' => 'Zdrowie'
     ),
     'Food' => array(
-        'pl' => 'Spożywcze',
+        'fr' => 'Alimentation',
         'it' => 'Alimentari',
-        'fr' => 'Alimentation'
+        'pl' => 'Spożywcze'
     ),
     'Service' => array(
-        'pl' => 'Usługi',
+        'fr' => 'Service',
         'it' => 'Servizi',
-        'fr' => 'Service'
+        'pl' => 'Usługi'
     ),
     'Gastronomy' => array(
-        'pl' => 'Gastronomia',
+        'fr' => 'Gastronomie',
         'it' => 'Gastronomia',
-        'fr' => 'Gastronomie'
+        'pl' => 'Gastronomia'
     ),
     'Sport' => array(
-        'pl' => 'Sport',
+        'fr' => 'Sport',
         'it' => 'Sport',
-        'fr' => 'Sport'
+        'pl' => 'Sport'
     ),
     'Entertainment' => array(
-        'pl' => 'Rozrywka',
+        'fr' => 'Divertissement',
         'it' => 'Intrattenimento',
-        'fr' => 'Divertissement'
+        'pl' => 'Rozrywka'
     ),
     'Other' => array(
-        'pl' => 'Inne',
+        'fr' => 'Autre',
         'it' => 'Altro',
-        'fr' => 'Autre'
+        'pl' => 'Inne'
     ), 
     
     /* Modal */
     'Type' => array(
-        'pl' => 'Typ',
+        'fr' => 'Type',
         'it' => 'Tipo',
-        'fr' => 'Type'
+        'pl' => 'Typ'
     ),
     
     'Edit in JOSM' => array(
-        'pl' => 'Edytuj w JOSM',
+        'fr' => 'Editer avec JOSM',
         'it' => 'Modifica in JOSM',
-        'fr' => 'Editer avec JOSM'
+        'pl' => 'Edytuj w JOSM'
     ),
     'Close' => array(
-        'pl' => 'Zamknij',
+        'fr' => 'Fermer',
         'it' => 'Chiudi',
-        'fr' => 'Fermer'
+        'pl' => 'Zamknij',
     ),
 
     /* Popup */
     'Open in OSM' => array(
-        'pl' => 'Zobacz w OSM',
+        'fr' => 'Ouvrir dans OSM',
         'it' => 'Apri in OSM',
-        'fr' => 'Ouvrir dans OSM'
+        'pl' => 'Zobacz w OSM'
     ),
     'Enter' => array(
-        'pl' => 'Wejdź',
         'de' => 'Betreten',
+        'fr' => 'Entrer',
         'it' => 'Entra',
-        'fr' => 'Entrer'
+        'pl' => 'Wejdź'
     )
 );
 ?>
