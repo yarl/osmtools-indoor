@@ -100,9 +100,28 @@ $(document).ready(function() {
     $(".leaflet-control-zoom").append( $("#map-loading") );
     $("#button-layer-api").button('toggle');
     
-    $('#about').popover({ html : true });
-    $('#contact').popover({ html : true });
-    $('#show').popover({ html : true });
+    
+    $('#about, #contact').popover({
+        trigger: 'manual',
+        position: 'bottom',
+        html : true
+    });
+
+    $('#about').click(function(evt) {
+        evt.stopPropagation();
+        $('#contact').popover('hide');
+        $(this).popover('show');
+    });
+
+    $('#contact').click(function(evt) {
+        evt.stopPropagation();
+        $('#about').popover('hide');
+        $(this).popover('show');
+    });
+
+    $('html').click(function() {
+        $('#about, #contact, #show').popover('hide');
+    });
     
     api.query();
 /**

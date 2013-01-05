@@ -127,3 +127,7 @@ hr {
     top: 5px;
     padding-left: 5px;
 }
+
+.dropdown-menu {
+    z-index: 1010;
+}

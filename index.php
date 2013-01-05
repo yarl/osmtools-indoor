@@ -54,7 +54,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="."><img src="img/logo.png" alt="OpenStreetMap Polska" /><span>/indoor<sup>beta</sup></span></a>
+          <a class="brand" href="."><img src="img/logo.png" alt="OSMTools.org" /><span>/indoor<sup>beta</sup></span></a>
           <div class="nav-collapse collapse">
             <ul class="nav">
               <li><a id="about" rel="popover" 
@@ -146,7 +146,7 @@
       <footer>
           <div class="row">
             <div class="span6">
-            <p>© 2012-2013 by Yarl and <a href="https://github.com/yarl/osmtools-indoor" alt="commoters at Github">commiters</a><br />
+            <p>© 2012-2013 by Yarl and <a href="https://github.com/yarl/osmtools-indoor/graphs/contributors" alt="commoters at Github">commiters</a><br />
             <a href="http://osmtools.org">OSMTools.org</a></p>
             </div>
             <div class="span4" style="text-align: right">
