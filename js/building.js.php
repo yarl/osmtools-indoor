@@ -59,7 +59,7 @@ building.building = function(id, name, levels) {
     this.shell;
     
     this.currentLevel = 0;
-    this.currentType = 'all';
+    this.currentType = 'All';
 
     /** Draw level n and write list of rooms **/
     this.drawLevel = function(n) {
@@ -126,8 +126,8 @@ building.level = function(id, level, rooms) {
         var txt = '';
         for(var i in level.rooms)
             if(level.rooms[i] != null && level.rooms[i].name != null)
-                if(api.building.currentType == 'all' || level.rooms[i].category == api.building.currentType) 
-                    txt += '<div class="indoor-list-room" onclick="api.building.popup('+level.id+','+i+')"><span style="color:'+ level.rooms[i].color(level.rooms[i], 'all') +'">■</span> ' + level.rooms[i].name + '</div>';
+                if(api.building.currentType == 'All' || level.rooms[i].category == api.building.currentType) 
+                    txt += '<div class="indoor-list-room" onclick="api.building.popup('+level.id+','+i+')"><span style="color:'+ level.rooms[i].color(level.rooms[i], 'All') +'">■</span> ' + level.rooms[i].name + '</div>';
         return txt;
     }
     
@@ -200,7 +200,7 @@ building.room = function(id, coords, name) {
             case 'corridor':return '#ccc';
             case 'verticalpassage':return '#aaa';
         }
-        if(api.building.currentType == 'all' || room.category == api.building.currentType) {
+        if(api.building.currentType == 'All' || room.category == api.building.currentType) {
             if(room.category != null) return building.color(room.category);
             if(room.name != null) return '#666';
             return '#999';
