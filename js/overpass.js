@@ -177,6 +177,12 @@ api.parseBuilding = function(data) {
             var key = $(this).attr("k").toLowerCase();
             var value = $(this).attr("v");
             if(key == "name") name = value;
+            if(key == "ref"){
+                if(name == undefined)
+                    name = '[' + value + '] ';
+                else
+                    name = '[' + value + '] ' + name;
+            }
             if(key == "buildingpart") type = value;
             if(key == "shop" && value.match(/(bag|boutique|clothes|cosmetics|jewelry|shoes)/))
                 category = "Fashion";
