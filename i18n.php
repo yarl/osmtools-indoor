@@ -7,103 +7,125 @@ $translation = array(
     /* Website */
     'Info' => array(
         'pl' => 'Informacje',
-        'it' => 'Informazioni'
+        'it' => 'Informazioni',
+        'fr' => 'Informations'
     ),
     'Contact' => array(
         'pl' => 'Kontakt',
         'de' => 'Kontakt',
-        'it' => 'Contatti'
+        'it' => 'Contatti',
+        'fr' => 'Contact'
     ),
     'More' => array(
         'pl' => 'Więcej',
         'de' => 'Mehr',
-        'it' => 'Altro'
+        'it' => 'Altro',
+        'fr' => 'Plus'
     ),
     
     'Map' => array(
         'pl' => 'Mapa',
         'de' => 'Karte',
-        'it' => 'Mappa'
+        'it' => 'Mappa',
+        'fr' => 'Carte'
     ),
     '<strong>Zoom in</strong> to load buildings' => array(
         'pl' => '<strong>Przybliż mapę</strong> aby pobrać elementy',
-        'it' => '<strong>Ingrandisci lo zoom</strong> per caricare gli edifici'
+        'it' => '<strong>Ingrandisci lo zoom</strong> per caricare gli edifici',
+        'fr' => '<strong>Zoomer</strong> pour charger les bâtiments'
     ),
     
     /* Nav */
     'Navigation' => array(
         'pl' => 'Nawigacja',
-        'it' => 'Navigazione'
+        'it' => 'Navigazione',
+        'fr' => 'Navigation'
     ),
     'All' => array(
         'pl' => 'Wszystko',
-        'it' => 'Tutti'
+        'it' => 'Tutti',
+        'de' => 'Tout'
     ),
     'Fashion' => array(
         'pl' => 'Moda',
-        'it' => 'Moda'
+        'it' => 'Moda',
+        'fr' => 'Mode'
     ),
     'Home' => array(
         'pl' => 'Wyposażenie domu',
-        'it' => 'Casa'
+        'it' => 'Casa',
+        'fr' => 'Maison'
     ),
     'Electronics' => array(
         'pl' => 'Elektronika',
-        'it' => 'Elettronica'
+        'it' => 'Elettronica',
+        'fr' => 'Electronique'
     ),
     'Health' => array(
         'pl' => 'Zdrowie',
-        'it' => 'Salute'
+        'it' => 'Salute',
+        'fr' => 'Santé'
     ),
     'Food' => array(
         'pl' => 'Spożywcze',
-        'it' => 'Alimentari'
+        'it' => 'Alimentari',
+        'fr' => 'Alimentation'
     ),
     'Service' => array(
         'pl' => 'Usługi',
-        'it' => 'Servizi'
+        'it' => 'Servizi',
+        'fr' => 'Service'
     ),
     'Gastronomy' => array(
         'pl' => 'Gastronomia',
-        'it' => 'Gastronomia'
+        'it' => 'Gastronomia',
+        'fr' => 'Gastronomie'
     ),
     'Sport' => array(
         'pl' => 'Sport',
-        'it' => 'Sport'
+        'it' => 'Sport',
+        'fr' => 'Sport'
     ),
     'Entertainment' => array(
         'pl' => 'Rozrywka',
-        'it' => 'Intrattenimento'
+        'it' => 'Intrattenimento',
+        'fr' => 'Divertissement'
     ),
     'Other' => array(
         'pl' => 'Inne',
-        'it' => 'Altro'
+        'it' => 'Altro',
+        'fr' => 'Autre'
     ), 
     
     /* Modal */
     'Type' => array(
         'pl' => 'Typ',
-        'it' => 'Tipo'
+        'it' => 'Tipo',
+        'fr' => 'Type'
     ),
     
     'Edit in JOSM' => array(
         'pl' => 'Edytuj w JOSM',
-        'it' => 'Modifica in JOSM'
+        'it' => 'Modifica in JOSM',
+        'fr' => 'Editer avec JOSM'
     ),
     'Close' => array(
         'pl' => 'Zamknij',
-        'it' => 'Chiudi'
+        'it' => 'Chiudi',
+        'fr' => 'Fermer'
     ),
 
     /* Popup */
     'Open in OSM' => array(
         'pl' => 'Zobacz w OSM',
-        'it' => 'Apri in OSM'
+        'it' => 'Apri in OSM',
+        'fr' => 'Ouvrir dans OSM'
     ),
     'Enter' => array(
         'pl' => 'Wejdź',
         'de' => 'Betreten',
-        'it' => 'Entra'
+        'it' => 'Entra',
+        'fr' => 'Entrer'
     )
 );
 ?>
