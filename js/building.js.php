@@ -39,7 +39,7 @@ building.outline = function(coords) {
     /** Draw outline with popup "Enter..." **/
     this.draw = function() {
         new L.Polygon(this.coords)      
-            .bindPopup('<strong>' + this.name + '</strong><hr />'+
+            .bindPopup('<strong>' + (this.name==undefined ? "<em>no name</em>" : this.name) + '</strong><hr />'+
             '<div style="text-align:right; margin-top: 5px;">'+
                 '<a class="btn btn-mini" href="http://osm.org/browse/relation/' + this.relationId + '" target="_blank"><?php echo __('Open in OSM'); ?></a> '+
                 '<button class="btn btn-mini btn-success" id="building-open" onclick="api.loadBuilding(' + this.relationId + ');"><?php echo __('Enter'); ?></button>'+
@@ -81,9 +81,12 @@ building.building = function(id, name, levels) {
                 level.draw(level);
                 $('#indoor-rooms').html(level.list());
                 api.building.currentLevel = n;
-                break;
+                return true;
             }
         }
+        alert("Something went wrong (no level "+n+")!");
+        api.loadShell();
+        return false;
     }
     
     /** Draw level switcher **/
@@ -142,6 +145,8 @@ building.level = function(id, level, rooms) {
             if(this.rooms[i] != null && this.rooms[i].name != null)
                 if(api.building.currentType == 'All' || this.rooms[i].category == api.building.currentType) 
                     txt += '<div class="indoor-list-room" onclick="api.building.popup('+this.id+','+i+')"><span style="color:'+ this.rooms[i].color(this.rooms[i], 'All') +'">■</span> ' + this.rooms[i].name + '</div>';
+        if(txt == '')
+            txt += '<em><?php echo __('Empty floor'); ?></em>';
         return txt;
     }
     

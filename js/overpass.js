@@ -236,7 +236,7 @@ api.parseBuilding = function(data) {
     
     // Relations - levels
     $(data).find('relation').each(function() {
-        var type, level;
+        var type, level = "??";
         
         $(this).find('tag').each(function() {
             var key = $(this).attr("k").toLowerCase();
@@ -258,13 +258,12 @@ api.parseBuilding = function(data) {
     
     // Relations - building
     $(data).find('relation').each(function() {
-        var type, level, name;
+        var type, name;
 
         $(this).find('tag').each(function() {
             var key = $(this).attr("k").toLowerCase();
             var value = $(this).attr("v");
             if(key == "type") type = value;
-            if(key == "level") level = value;
             if(key == "name") name = value;
         }); 
 
@@ -287,12 +286,12 @@ api.parseBuilding = function(data) {
     //finish
     if(api.building != undefined) {
         api.building.drawLevelSwitcher();
-        api.building.drawLevel(0);
-        
-        $('#indoor-map').attr({"class": 'span10'});
-        $('#indoor-navigation').css('display', 'block');
-        map.invalidateSize();
-        $("#indoor-levels-0").button('toggle');
+        if(api.building.drawLevel(0)) {
+            $('#indoor-map').attr({"class": 'span10'});
+            $('#indoor-navigation').css('display', 'block');
+            map.invalidateSize();
+            $("#indoor-levels-0").button('toggle');
+        }
     } else {
         alert("Something went wrong (no building found)!");
         api.loadShell();

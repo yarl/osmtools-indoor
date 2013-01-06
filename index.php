@@ -59,13 +59,18 @@
             <ul class="nav">
               <li><a id="about" rel="popover" 
                      data-placement="bottom" 
-                     data-content='<a href="http://wiki.openstreetmap.org/wiki/IndoorOSM">Opis modelu Indoor Mapping</a>'
+                     data-content='<table class="table table-condensed">
+                        <tbody>
+                            <tr>
+                            <td><?php echo __('Description'); ?></td>
+                            <td><a href="https://github.com/yarl/osmtools-indoor#readme"><?php echo __('Model implementation'); ?></a></td>
+                            </tr><tr>
+                            <td><?php echo __('Contact'); ?></td>
+                            <td><a href="http://www.openstreetmap.org/user/Yarl">@Yarl</a></td>
+                            </tr>
+                        </tbody>
+                        </table>'
                      data-original-title="<?php echo __('Info'); ?>"><?php echo __('Info'); ?></a>
-              </li>
-              <li><a id="contact" rel="popover" 
-                     data-placement="bottom" 
-                     data-content='Autor: <a href="http://www.openstreetmap.org/user/Yarl" alt="Kontakt">user:Yarl</a>'
-                     data-original-title="<?php echo __('Contact'); ?>"><?php echo __('Contact'); ?></a>
               </li>
             </ul>
             <ul class="nav pull-right">

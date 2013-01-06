@@ -10,6 +10,12 @@ $translation = array(
         'it' => 'Informazioni',
         'pl' => 'Informacje'
     ),
+    'Description' => array(
+        'pl' => 'Opis'
+    ),
+    'Model implementation' => array(
+        'pl' => 'Implementacja modelu'
+    ),
     'Contact' => array(
         'de' => 'Kontakt',
         'fr' => 'Contact',
@@ -96,6 +102,9 @@ $translation = array(
         'fr' => 'Autre',
         'it' => 'Altro',
         'pl' => 'Inne'
+    ), 
+    'Empty floor' => array(
+        'pl' => 'Puste piętro'
     ), 
     
     /* Modal */
