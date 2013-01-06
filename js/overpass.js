@@ -2,7 +2,8 @@ var api = {};
 api.layer = {};
 
 api.layer.building = new L.LayerGroup();
-api.layer.outlines = new L.LayerGroup();
+api.layer.outlines = new L.LayerGroup();    //full outline
+api.layer.pins = new L.LayerGroup();        //pin only
 
 api.shells = new Array();       //list of outlines
 api.building;                   //building
@@ -13,20 +14,19 @@ api.building;                   //building
  */
 
 api.tagShell = function() {
-    var boundary = map.getBounds();
-    var bb = '('+boundary.getSouthEast().lat+','+boundary.getNorthWest().lng+','+
-        boundary.getNorthWest().lat+','+boundary.getSouthEast().lng+');';
+    var b = map.getBounds();
+    var boundary = '('+b.getSouthEast().lat+','+b.getNorthWest().lng+','+
+        b.getNorthWest().lat+','+b.getSouthEast().lng+');';
     
-    var text = '('+
-        'way["level"="0"]["building"="yes"]'+bb+
+    return '('+
+        'way["level"="0"]["building"="yes"]'+boundary+
         'rel(bw)->.relations;node(w);'+
     ');'+
     'out;';
-    return text;
 }
 
 api.tagBuilding = function(id) {
-    var text = '('+
+    return text = '('+
         'relation('+id+');'+
         'rel(r);'+
         'node(r)->.nodes;'+
@@ -34,7 +34,6 @@ api.tagBuilding = function(id) {
         'node(w);'+
     ');'+
     'out;';
-    return text;
 }
 
 /**
@@ -42,11 +41,32 @@ api.tagBuilding = function(id) {
  * -----------------------------------------------------------------------------
  */
 api.query = function() {
-    // @TODO: pinezka na dalekim zoomie
-    if(map.getZoom() > 9 && map.layer == 1)
-        api.loadShell();
-    else
-        $('#map-zoominfo').css('display', 'block');
+    if(map.layer == 1) {
+        //download elements for zoom 10+
+        if(map.getZoom() > 9) {
+            api.loadShell();
+            if(map.getZoom() < 16) {
+                //full outline
+                map.removeLayer(api.layer.outlines);
+                map.addLayer(api.layer.pins);
+            } else {
+                //pin only
+                map.removeLayer(api.layer.pins);
+                map.addLayer(api.layer.outlines);
+            }
+        } else
+            $('#map-zoominfo').css('display', 'block');
+    } else if(map.layer == 2) {
+        if(map.getZoom() < 16) {
+            //full outline
+            map.removeLayer(api.layer.building);
+            map.addLayer(api.layer.pins);
+        } else {
+            //pin only
+            map.removeLayer(api.layer.pins);
+            map.addLayer(api.layer.building);
+        }
+    }
 }
 
 api.loadShell = function() {  
@@ -147,7 +167,7 @@ api.parseShell = function(data) {
             outlines[shell].name = name;
             if(!containsId(api.shells, shell)) {
                 api.shells.push(shell);
-                outlines[shell].draw(outlines[shell]);
+                outlines[shell].draw();
             }
         }
     });

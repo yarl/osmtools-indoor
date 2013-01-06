@@ -92,8 +92,8 @@ $(document).ready(function() {
     map.on('moveend',function() {
         $.cookie('lat', map.getCenter().lat, { expires: 30 });
         $.cookie('lon', map.getCenter().lng, { expires: 30 });
-        $.cookie('zoom', map.getZoom(), { expires: 30 });
-        if(map.layer == 1)
+        $.cookie('zoom', map.getZoom(), { expires: 30 });        
+        //if(map.layer == 1)
             api.query();
     });
        
