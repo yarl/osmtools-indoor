@@ -11,9 +11,11 @@ $translation = array(
         'pl' => 'Informacje'
     ),
     'Description' => array(
+        'it' => 'Descrizione',
         'pl' => 'Opis'
     ),
     'Model implementation' => array(
+        'it' => 'Implementazione del modello',
         'pl' => 'Implementacja modelu'
     ),
     'Contact' => array(
@@ -104,6 +106,7 @@ $translation = array(
         'pl' => 'Inne'
     ), 
     'Empty floor' => array(
+        'it' => 'Piano vuoto',
         'pl' => 'Puste piętro'
     ), 
     
