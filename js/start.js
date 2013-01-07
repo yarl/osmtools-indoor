@@ -60,13 +60,6 @@ $(document).ready(function() {
     
     map.layer = 1; //1=api, 2=search
 
-    map.icon = L.icon({
-        iconUrl: 'img/icons/icon.png',
-        iconSize: [28, 28],
-        iconAnchor: [14, 28],
-        popupAnchor: [0, -28]
-    });
-
     map.fitZoom = function(array) {
         if(array.length == 0) {
 
@@ -99,7 +92,6 @@ $(document).ready(function() {
        
     $(".leaflet-control-zoom").append( $("#map-loading") );
     $("#button-layer-api").button('toggle');
-    
     
     $('#about, #contact').popover({
         trigger: 'manual',

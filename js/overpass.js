@@ -132,7 +132,7 @@ function containsId(array, object) {
 }
 
 /**
- * PARSING
+ * PARSING SHELL
  * -----------------------------------------------------------------------------
  */
 api.parseShell = function(data) {   
@@ -173,26 +173,41 @@ api.parseShell = function(data) {
     });
 }
 
+/**
+ * PARSING BUILDING
+ * -----------------------------------------------------------------------------
+ */
 api.parseBuilding = function(data) {
     var nodes = new Array();
+        var doors = new Array();
     var ways = new Array();
     var relations = new Array();
     
-    // Nodes
-    // @TODO: wyjścia!
+    //NODES
     $(data).find('node').each(function() {
-        nodes[$(this).attr("id")] = new L.LatLng($(this).attr("lat"), $(this).attr("lon"));
+        var i = $(this).attr("id");
+        nodes[i] = new L.LatLng($(this).attr("lat"), $(this).attr("lon"));
+        
+        //extra tags for doors and pois
+        $(this).find('tag').each(function() {
+            var key = $(this).attr("k").toLowerCase();
+            var value = $(this).attr("v");
+            if(key == "door") nodes[i].door = value;
+            if(key == "name") nodes[i].name = value;
+            if(key == "amenity" || key == "information") nodes[i].poi = value;
+        });
     });
-    //console.log("węzłów " + nodes.length);
 
-    // Ways - rooms
+    //WAYS (ROOMS)
     $(data).find('way').each(function() {
         var coords = new Array();
         $(this).find('nd').each(function() {
             coords.push(nodes[$(this).attr("ref")]);
         });
         
-        var name, type, category = "Other", shop;
+        var name, type, category, shop;
+        category = "Other";
+        
         $(this).find('tag').each(function() {
             var key = $(this).attr("k").toLowerCase();
             var value = $(this).attr("v");
@@ -232,9 +247,8 @@ api.parseBuilding = function(data) {
         
         ways[$(this).attr("id")] = way;
     });
-    //console.log("dróg " + ways.length);
     
-    // Relations - levels
+    //RELATIONS (LEVELS)
     $(data).find('relation').each(function() {
         var type, level = "??";
         
@@ -247,16 +261,23 @@ api.parseBuilding = function(data) {
         
         if(type == "level") {
             var rooms = new Array();
+            var pois = new Array();
             $(this).find('member').each(function() {
                 if($(this).attr("role") == "buildingpart")
                     rooms.push(ways[$(this).attr("ref")]);
+                if($(this).attr("type") == "node" && $(this).attr("role") == "poi") {
+                    var ref = $(this).attr("ref");
+                    pois.push(new building.poi(ref, nodes[ref], nodes[ref].poi, nodes[ref].name));
+                }
+                    
             }); 
-            
-            relations[$(this).attr("id")] = new building.level($(this).attr("id"), level, rooms);
+            var id = $(this).attr("id");
+            relations[id] = new building.level($(this).attr("id"), level, rooms);
+            relations[id].pois = pois;
         }
     });
     
-    // Relations - building
+    //RELATIONS (BUILDING)
     $(data).find('relation').each(function() {
         var type, name;
 

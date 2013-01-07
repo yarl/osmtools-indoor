@@ -120,13 +120,15 @@ building.building = function(id, name, levels) {
 building.level = function(id, level, rooms) {
     this.id = id;
     this.level = level;
+    
     this.rooms = rooms;
-    this.shell; //todo!
+    this.pois = new Array();
+    
+    this.shell; //@TODO
     this.coords;
     this.name = "?";
     
     /** Write list of all room on level **/
-
     this.list = function() {
         this.rooms.sort(function(a, b) {
             var nameA, nameB;
@@ -155,7 +157,10 @@ building.level = function(id, level, rooms) {
         api.layer.building.clearLayers();
         for(var i in this.rooms) 
             if(this.rooms[i] != null)
-                this.rooms[i].draw(this.rooms[i]);
+                this.rooms[i].draw();
+        for(var i in this.pois) 
+            if(this.pois[i] != null)
+                this.pois[i].draw();
     }
 }
 
@@ -181,6 +186,7 @@ building.room = function(id, coords, name) {
             fillOpacity: 0.4
         })
         .bindLabel('<span style="color:'+ this.color() +'">■</span> ' + this.name)
+        .addTo(api.layer.building)
         .on('click', function() {
             $('#indoor-window-header').html(helper.name);
             $('#indoor-window-text').html("<h4><?php echo __('Type'); ?></h4>" + building.types[helper.category]);
@@ -202,8 +208,6 @@ building.room = function(id, coords, name) {
 
             $('#indoor-window').modal();
         });
-
-        api.layer.building.addLayer(this.polygon);
     }
     
     /** Color for room **/
@@ -211,13 +215,17 @@ building.room = function(id, coords, name) {
         switch(this.type) {
             case 'corridor':return '#ccc';
             case 'verticalpassage':return '#aaa';
+            case 'room': {
+                if(this.name == null) return '#999';
+                if(api.building.currentType == 'All' || this.category == api.building.currentType)
+                    return building.color[this.category];
+                else
+                    return '#666';
+            }
+                
         }
-        if(api.building.currentType == 'All' || this.category == api.building.currentType) {
-            if(this.category != null) return building.color[this.category];
-            if(this.name != null) return '#666';
-            return '#999';
-        }
-        return '#666';
+        return '#000';
+
     }
      
     /** Click or not **/
@@ -247,5 +255,35 @@ building.room = function(id, coords, name) {
         }
         return new L.LatLng(sumLat/this.coords.length, sumLon/this.coords.length);
     }
+}
+
+building.poi = function(id, coords, type, name) {
+    this.id = id;
+    this.coords = coords;
+    this.type = type;
+    this.name = name;
+    
+    this.draw = function() {
+        new L.marker([this.coords.lat, this.coords.lng], {icon: this.icon(this.type)})
+            .bindLabel(this.name==undefined ? "<em>brak nazwy</em>" : this.name)
+            .addTo(api.layer.building);
+    }
+    
+    this.icon = function(type) {
+        var icon = '';
+        switch(type) {
+            case 'atm' : icon = 'img/pois/atm.png'; break;
+            case 'office' : icon = 'img/pois/info.png'; break;
+            case 'telephone' : icon = 'img/pois/tel.png'; break;
+            case 'vending_mashine' : icon = 'img/pois/vmashine.png'; break;
+        }
+        
+        return L.icon({
+            iconUrl: icon,
+            iconSize: [12, 12],
+            iconAnchor: [6, 12],
+            popupAnchor: [0, -12]
+        });
+    }   
 }
 </script>
