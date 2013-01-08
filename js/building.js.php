@@ -7,7 +7,7 @@ var building = {};
 building.color = {
     'Fashion': '#a5b178',
     'Home': '#6e305e',
-    'Electronics': '#c43741',
+    'Electronics': '#a2222b',
     'Health': '#3e719e',
     'Food': '#59946c',
     'Service': '#2d878b',
@@ -73,16 +73,23 @@ building.building = function(id, name, levels) {
     this.currentLevel = 0;
     this.currentType = 'All';
 
-    /** Draw level n and write list of rooms **/
-    this.drawLevel = function(n) {
+    /** Return level n **/
+    this.getLevel = function(n) {
         for(var i in api.building.levels) {
             var level = api.building.levels[i];
-            if(level.level == n) {
-                level.draw(level);
-                $('#indoor-rooms').html(level.list());
-                api.building.currentLevel = n;
-                return true;
-            }
+            if(level.level == n)
+                return level;
+        }
+    }
+
+    /** Draw level n and write list of rooms **/
+    this.drawLevel = function(n) {
+        var level = this.getLevel(n);
+        if(level != undefined) {
+            level.draw();
+            $('#indoor-rooms').html(level.list());
+            api.building.currentLevel = n;
+            return true;
         }
         alert("Something went wrong (no level "+n+")!");
         api.loadShell();
@@ -147,8 +154,13 @@ building.level = function(id, level, rooms) {
             if(this.rooms[i] != null && this.rooms[i].name != null)
                 if(api.building.currentType == 'All' || this.rooms[i].category == api.building.currentType) 
                     txt += '<div class="indoor-list-room" onclick="api.building.popup('+this.id+','+i+')"><span style="color:'+ this.rooms[i].color(this.rooms[i], 'All') +'">■</span> ' + this.rooms[i].name + '</div>';
-        if(txt == '')
-            txt += '<em><?php echo __('Empty floor'); ?></em>';
+        if(txt == '') {
+            if(api.building.currentType == 'All')
+                txt += '<em><?php echo __('Empty floor'); ?></em>';
+            else
+                txt += '<em><?php echo __('None on this floor'); ?></em>';
+        }
+            
         return txt;
     }
     
@@ -164,14 +176,15 @@ building.level = function(id, level, rooms) {
     }
 }
 
-building.room = function(id, coords, name) {
+building.room = function(id, coords) {
     this.id = id;
     this.coords = coords;
-    this.name = name;
+    this.name;
     
     this.type;      // corridor,room...
     this.category;  // fashion,home,health...
     this.shop;      // value of amenity=* or shop=*
+    this.access;
     
     this.polygon;
     
@@ -213,9 +226,13 @@ building.room = function(id, coords, name) {
     /** Color for room **/
     this.color = function() {
         switch(this.type) {
-            case 'corridor':return '#ccc';
+            case 'corridor': {
+                    if(this.access == "private") return '#cca3a3';
+                    return '#ccc';
+            }
             case 'verticalpassage':return '#aaa';
             case 'room': {
+                if(this.access == "private") return '#997a7a';
                 if(this.name == null) return '#999';
                 if(api.building.currentType == 'All' || this.category == api.building.currentType)
                     return building.color[this.category];
@@ -263,27 +280,70 @@ building.poi = function(id, coords, type, name) {
     this.type = type;
     this.name = name;
     
-    this.draw = function() {
-        new L.marker([this.coords.lat, this.coords.lng], {icon: this.icon(this.type)})
-            .bindLabel(this.name==undefined ? "<em>brak nazwy</em>" : this.name)
-            .addTo(api.layer.building);
+    this.marker = new L.marker([this.coords.lat, this.coords.lng]);
+    this.circle = new L.circle([this.coords.lat, this.coords.lng], 0.5, {
+            weight: 2,
+            color: '#666',
+            fillOpacity: 0.4
+        });
+    this.current;
+    
+    this.icon = function() {
+        switch(this.type) {
+            case 'atm' : return 'img/pois/atm.png';
+            case 'office' : return 'img/pois/info.png';
+            case 'telephone' : return 'img/pois/tel.png';
+            case 'vending_mashine' : return 'img/pois/vmashine.png';
+            default : return null;
+        }
     }
     
-    this.icon = function(type) {
-        var icon = '';
-        switch(type) {
-            case 'atm' : icon = 'img/pois/atm.png'; break;
-            case 'office' : icon = 'img/pois/info.png'; break;
-            case 'telephone' : icon = 'img/pois/tel.png'; break;
-            case 'vending_mashine' : icon = 'img/pois/vmashine.png'; break;
+    this.draw = function() {
+        var helper = this;
+        //circle - no name
+        if(this.icon() == null || map.getZoom() < 20) {
+            if(this.current != 2) {
+                this.current = 2;
+                api.layer.building.removeLayer(this.marker);
+                this.circle.addTo(api.layer.building);
+                this.circle.on('click', function() { helper.modal() });
+            }
+        } else {
+            if(this.current != 1) {
+                this.current = 1;
+                api.layer.building.removeLayer(this.circle);
+                this.marker.setIcon(L.icon({
+                    iconUrl: this.icon(),
+                    iconSize: [16, 16],
+                    iconAnchor: [8, 8]
+                }));
+                this.marker.bindLabel(this.name);
+                this.marker.addTo(api.layer.building);
+                this.marker.on('click', function() { helper.modal() });
+            }
         }
-        
-        return L.icon({
-            iconUrl: icon,
-            iconSize: [12, 12],
-            iconAnchor: [6, 12],
-            popupAnchor: [0, -12]
+    }
+    
+    this.modal = function() {
+        $('#indoor-window-header').html(this.name==undefined ? "<em><?php echo __('no name'); ?></em>" : this.name);
+        $('#indoor-window-text').html("<h4><?php echo __('Type'); ?></h4>" + this.type);
+        $("#indoor-window-link").attr("href", "http://www.openstreetmap.org/browse/node/" + this.id);
+
+        var href = "http://localhost:8111/load_and_zoom";
+            href += "?left=" + String(parseFloat(this.coords.lng)-0.001);
+            href += "&right=" + String(parseFloat(this.coords.lng)+0.001);
+            href += "&top=" + String(parseFloat(this.coords.lat)+0.001);
+            href += "&bottom=" + String(parseFloat(this.coords.lat)-0.001);
+            href += "&select=node" + this.id;
+
+        $("#indoor-window-josm").click(function(){
+            if (document.exitFullscreen) document.exitFullscreen();
+            else if (document.mozCancelFullScreen) document.mozCancelFullScreen();
+            else if (document.webkitCancelFullScreen) document.webkitCancelFullScreen();
+            $('#josm-iframe').attr("src", href);
         });
-    }   
+
+        $('#indoor-window').modal();
+    }
 }
 </script>

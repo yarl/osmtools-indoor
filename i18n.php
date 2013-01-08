@@ -4,7 +4,10 @@
  */
 
 $translation = array(
-    /* Website */
+    /* 
+     * Website 
+     * -------------------------------------------------------------------------
+     */
     'Info' => array(
         'fr' => 'Informations',
         'it' => 'Informazioni',
@@ -43,12 +46,17 @@ $translation = array(
         'pl' => '<strong>Przybliż mapę</strong> aby pobrać elementy'
     ),
     
-    /* Nav */
+    /* 
+     * Navigation 
+     * -------------------------------------------------------------------------
+     */
     'Navigation' => array(
         'fr' => 'Navigation',
         'it' => 'Navigazione',
         'pl' => 'Nawigacja'
     ),
+    
+    // Shops
     'All' => array(
         'de' => 'Tout',
         'fr' => 'Tous',
@@ -105,12 +113,20 @@ $translation = array(
         'it' => 'Altro',
         'pl' => 'Inne'
     ), 
+    
+    // empty
     'Empty floor' => array(
         'it' => 'Piano vuoto',
         'pl' => 'Puste piętro'
+    ),
+    'None on this floor' => array(
+        'pl' => 'Brak na piętrze'
     ), 
     
-    /* Modal */
+    /* 
+     * Modal 
+     * -------------------------------------------------------------------------
+     */
     'Type' => array(
         'fr' => 'Type',
         'it' => 'Tipo',
@@ -128,7 +144,10 @@ $translation = array(
         'pl' => 'Zamknij',
     ),
 
-    /* Popup */
+    /* 
+     * Popup 
+     * -------------------------------------------------------------------------
+     */
     'Open in OSM' => array(
         'fr' => 'Ouvrir dans OSM',
         'it' => 'Apri in OSM',
@@ -139,6 +158,14 @@ $translation = array(
         'fr' => 'Entrer',
         'it' => 'Entra',
         'pl' => 'Wejdź'
+    ),
+    
+    /* 
+     * Misc
+     * -------------------------------------------------------------------------
+     */
+    'no name' => array(
+        'pl' => 'brak nazwy'
     )
 );
 ?>

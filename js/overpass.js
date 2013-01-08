@@ -57,14 +57,16 @@ api.query = function() {
         } else
             $('#map-zoominfo').css('display', 'block');
     } else if(map.layer == 2) {
-        if(map.getZoom() < 16) {
-            //full outline
+        if(map.getZoom() < 16) {          
+            //pin only
             map.removeLayer(api.layer.building);
             map.addLayer(api.layer.pins);
         } else {
-            //pin only
+            //outline
             map.removeLayer(api.layer.pins);
             map.addLayer(api.layer.building);
+            for(var i in api.building.getLevel(0).pois)
+                api.building.getLevel(api.building.currentLevel).pois[i].draw();
         }
     }
 }
@@ -205,46 +207,42 @@ api.parseBuilding = function(data) {
             coords.push(nodes[$(this).attr("ref")]);
         });
         
-        var name, type, category, shop;
-        category = "Other";
+        var way = new building.room($(this).attr("id"), coords);
+            way.category = "Other";
         
         $(this).find('tag').each(function() {
             var key = $(this).attr("k").toLowerCase();
             var value = $(this).attr("v");
-            if(key == "name") name = value;
+            if(key == "name") way.name = value;
+            if(key == "access") way.access = value;
             if(key == "ref")
-                (name === undefined) ? name = '['+value+']' : name = '['+value+'] '+name;
+                (way.name === undefined) ? way.name = '['+value+']' : way.name = '['+value+'] '+way.name;
             
-            if(key == "buildingpart") type = value;
+            if(key == "buildingpart") way.type = value;
             if(key == "shop" && value.match(/(bag|boutique|clothes|cosmetics|jewelry|shoes)/))
-                category = "Fashion";
+                way.category = "Fashion";
             if(key == "shop" && value.match(/(antiques|art|bathroom_furnishing|bed|carpet|curtain|doityourself|furniture|hardware|interior_decoration|kitchen|pet)/))
-                category = "Home";
+                way.category = "Home";
             if(key == "shop" && value.match(/(computer|electronics|hifi|mobile_phone|photo)/))
-                category = "Electronics"; 
+                way.category = "Electronics"; 
             if((key == "amenity" && value.match(/(pharmacy|clinic|fitness_center)/)) || (key == "shop" && value.match(/(baby_goods|beauty|chemist|hairdresser|massage|optician|organic|tattoo)/)))
-                category = "Health";
+                way.category = "Health";
             if(key == "shop" && value.match(/(supermarket|alcohol|bakery|beverages|butcher|convenience|deli|herbalist)/))
-                category = "Food";
+                way.category = "Food";
             if((key == "amenity" && value.match(/(bureau_de_change|post_office)/)) || (key == "shop" && value.match(/(books|dry_cleaning|gift)/)) || (key == "service"))
-                category = "Service";
+                way.category = "Service";
             if(key == "amenity" && value.match(/(cafe|fast_food|food_court|ice_cream|pub|restaurant)/))
-                category = "Gastronomy";
+                way.category = "Gastronomy";
             if(key == "shop" && value.match(/(bicycle|dive|outdoor|sports)/))
-                category = "Sport";
+                way.category = "Sport";
             if((key == "amenity" && value.match(/(arts_centre|cinema|theatre)/)) || (key == "leisure" && value.match(/(sports_centre)/)))
-                category = "Entertainment";
+                way.category = "Entertainment";
             
-            if(key == "shop" && shop == null) shop = value;
-            if(key == "amenity" && shop == null) shop = value;
-            if(key == "leisure" && shop == null) shop = value;
+            if(key == "shop" && way.shop == null) way.shop = value;
+            if(key == "amenity" && way.shop == null) way.shop = value;
+            if(key == "leisure" && way.shop == null) way.shop = value;
         }); 
-        
-        var way = new building.room($(this).attr("id"), coords, name);
-        way.type = type;
-        way.category = category;
-        way.shop = shop;
-        
+
         ways[$(this).attr("id")] = way;
     });
     

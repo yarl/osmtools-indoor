@@ -37,6 +37,7 @@
     
     <script src="js/leaflet/leaflet.markercluster.js"></script>
     <script src="js/leaflet/leaflet.label.js"></script>
+    <script src="js/leaflet/leaflet.providers.js"></script>
     <script src="js/leaflet/leaflet-hash.js"></script>
     <script src="js/leaflet/leaflet-geoloc.js"></script>
     <script src="js/leaflet/leaflet-fullscreen.js"></script>
