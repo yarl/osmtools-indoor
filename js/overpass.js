@@ -181,7 +181,6 @@ api.parseShell = function(data) {
  */
 api.parseBuilding = function(data) {
     var nodes = new Array();
-        var doors = new Array();
     var ways = new Array();
     var relations = new Array();
     

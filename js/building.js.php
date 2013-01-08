@@ -193,6 +193,7 @@ building.room = function(id, coords) {
         var helper = this;
         
         this.polygon = new L.Polygon(this.coords, {
+            smoothFactor: 0.2,
             clickable: this.clickable(),
             weight: this.weight(),
             color: this.color(),
@@ -200,49 +201,63 @@ building.room = function(id, coords) {
         })
         .bindLabel('<span style="color:'+ this.color() +'">■</span> ' + this.name)
         .addTo(api.layer.building)
-        .on('click', function() {
-            $('#indoor-window-header').html(helper.name);
-            $('#indoor-window-text').html("<h4><?php echo __('Type'); ?></h4>" + building.types[helper.category]);
-            $("#indoor-window-link").attr("href", "http://www.openstreetmap.org/browse/way/" + helper.id);
+        .on('click', function() { helper.modal(); });
+        
+        for(var i in this.coords) {
+            if(this.coords[i].door != null) {
+                new L.circleMarker(this.coords[i], {
+                    weight: 1,
+                    clickable: false,
+                    color: '#666',
+                    fillOpacity: 0.8
+                })
+                .setRadius(1)
+                .addTo(api.layer.building);
+            }
+        }
+    }
+    
+    this.modal = function() {
+        $('#indoor-window-header').html(this.name);
+        $('#indoor-window-text').html("<h4><?php echo __('Type'); ?></h4>" + building.types[this.category]);
+        $("#indoor-window-link").attr("href", "http://www.openstreetmap.org/browse/way/" + this.id);
 
-            var href = "http://localhost:8111/load_and_zoom";
-                href += "?left=" + helper.polygon.getBounds().getSouthWest().lng;
-                href += "&right=" + helper.polygon.getBounds().getNorthEast().lng;
-                href += "&top=" + helper.polygon.getBounds().getNorthEast().lat;
-                href += "&bottom=" + helper.polygon.getBounds().getSouthWest().lat;
-                href += "&select=way" + helper.id;
+        var href = "http://localhost:8111/load_and_zoom";
+            href += "?left=" + this.polygon.getBounds().getSouthWest().lng;
+            href += "&right=" + this.polygon.getBounds().getNorthEast().lng;
+            href += "&top=" + this.polygon.getBounds().getNorthEast().lat;
+            href += "&bottom=" + this.polygon.getBounds().getSouthWest().lat;
+            href += "&select=way" + this.id;
 
-            $("#indoor-window-josm").click(function(){
-                if (document.exitFullscreen) document.exitFullscreen();
-                else if (document.mozCancelFullScreen) document.mozCancelFullScreen();
-                else if (document.webkitCancelFullScreen) document.webkitCancelFullScreen();
-                $('#josm-iframe').attr("src", href);
-            });
-
-            $('#indoor-window').modal();
+        $("#indoor-window-josm").click(function(){
+            if (document.exitFullscreen) document.exitFullscreen();
+            else if (document.mozCancelFullScreen) document.mozCancelFullScreen();
+            else if (document.webkitCancelFullScreen) document.webkitCancelFullScreen();
+            $('#josm-iframe').attr("src", href);
         });
+
+        $('#indoor-window').modal();
     }
     
     /** Color for room **/
     this.color = function() {
         switch(this.type) {
             case 'corridor': {
-                    if(this.access == "private") return '#cca3a3';
-                    return '#ccc';
+                if(this.access == "private") return '#bb9696';
+                return '#bbb';
             }
             case 'verticalpassage':return '#aaa';
             case 'room': {
                 if(this.access == "private") return '#997a7a';
-                if(this.name == null) return '#999';
+                if(this.name == null) return '#888';
                 if(api.building.currentType == 'All' || this.category == api.building.currentType)
                     return building.color[this.category];
                 else
-                    return '#666';
+                    return '#555';
             }
                 
         }
         return '#000';
-
     }
      
     /** Click or not **/
@@ -257,7 +272,7 @@ building.room = function(id, coords) {
     /** Color for room **/
     this.weight = function() {
         switch(this.type) {
-            case 'corridor':return 0;
+            case 'corridor':return 1;
             case 'verticalpassage':return 0;  
         }
         return 2;
