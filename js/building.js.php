@@ -192,6 +192,9 @@ building.room = function(id, coords) {
     this.draw = function() {
         var helper = this;
         
+        if(this.inner) 
+            this.coords = [this.coords, this.inner];
+        
         this.polygon = new L.Polygon(this.coords, {
             smoothFactor: 0.2,
             clickable: this.clickable(),
@@ -202,7 +205,8 @@ building.room = function(id, coords) {
         .bindLabel('<span style="color:'+ this.color() +'">■</span> ' + this.name)
         .addTo(api.layer.building)
         .on('click', function() { helper.modal(); });
-        
+        if(this.type == "corridor") this.polygon.bringToBack();
+            
         for(var i in this.coords) {
             if(this.coords[i].door != null) {
                 new L.circleMarker(this.coords[i], {

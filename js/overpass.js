@@ -27,11 +27,7 @@ api.tagShell = function() {
 
 api.tagBuilding = function(id) {
     return text = '('+
-        'relation('+id+');'+
-        'rel(r);'+
-        'node(r)->.nodes;'+
-        'way(r);'+
-        'node(w);'+
+        'relation('+id+');>>->.rels;>;'+
     ');'+
     'out;';
 }
@@ -182,6 +178,7 @@ api.parseShell = function(data) {
 api.parseBuilding = function(data) {
     var nodes = new Array();
     var ways = new Array();
+    var ways_rel = new Array();
     var relations = new Array();
     
     //NODES
@@ -218,6 +215,7 @@ api.parseBuilding = function(data) {
                 (way.name === undefined) ? way.name = '['+value+']' : way.name = '['+value+'] '+way.name;
             
             if(key == "buildingpart") way.type = value;
+            
             if(key == "shop" && value.match(/(bag|boutique|clothes|cosmetics|jewelry|shoes)/))
                 way.category = "Fashion";
             if(key == "shop" && value.match(/(antiques|art|bathroom_furnishing|bed|carpet|curtain|doityourself|furniture|hardware|interior_decoration|kitchen|pet)/))
@@ -245,6 +243,47 @@ api.parseBuilding = function(data) {
         ways[$(this).attr("id")] = way;
     });
     
+    //RELATIONS (ROOMS)
+    $(data).find('relation').each(function() {
+        var type;
+        
+        $(this).find('tag').each(function() {
+            var key = $(this).attr("k").toLowerCase();
+            var value = $(this).attr("v");
+            if(key == "type") type = value;
+        }); 
+        
+        if(type == 'multipolygon') {
+            var outers = new Array();
+            var inners = new Array();
+            
+            $(this).find('member').each(function() {
+                if($(this).attr("type") == "way" && $(this).attr("role") == "outer")
+                    outers.push(ways[$(this).attr("ref")]);
+                if($(this).attr("type") == "way" && $(this).attr("role") == "inner")
+                    inners.push(ways[$(this).attr("ref")]);
+            }); 
+            
+            var coors_o = new Array();
+            var coors_i = new Array();
+            for(var i in outers)
+                coors_o = coors_o.concat(outers[i].coords);
+            for(var i in inners)
+                coors_i = coors_i.concat(inners[i].coords);
+            
+            var way = new building.room($(this).attr("id"), coors_o);
+            way.inner = coors_i;
+
+            $(this).find('tag').each(function() {
+                var key = $(this).attr("k").toLowerCase();
+                var value = $(this).attr("v");
+                if(key == "buildingpart") way.type = value;
+            }); 
+
+            ways_rel[$(this).attr("id")] = way;
+        }
+    });
+    
     //RELATIONS (LEVELS)
     $(data).find('relation').each(function() {
         var type, level = "??";
@@ -260,8 +299,10 @@ api.parseBuilding = function(data) {
             var rooms = new Array();
             var pois = new Array();
             $(this).find('member').each(function() {
-                if($(this).attr("role") == "buildingpart")
+                if($(this).attr("type") == "way" && $(this).attr("role") == "buildingpart")
                     rooms.push(ways[$(this).attr("ref")]);
+                if($(this).attr("type") == "relation" && $(this).attr("role") == "buildingpart")
+                    rooms.push(ways_rel[$(this).attr("ref")]);
                 if($(this).attr("type") == "node" && $(this).attr("role") == "poi") {
                     var ref = $(this).attr("ref");
                     pois.push(new building.poi(ref, nodes[ref], nodes[ref].poi, nodes[ref].name));
