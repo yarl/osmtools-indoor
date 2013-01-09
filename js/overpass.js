@@ -272,6 +272,7 @@ api.parseBuilding = function(data) {
                 coors_i = coors_i.concat(inners[i].coords);
             
             var way = new building.room($(this).attr("id"), coors_o);
+            way.category = "Other";
             way.inner = coors_i;
 
             $(this).find('tag').each(function() {

@@ -191,11 +191,11 @@ building.room = function(id, coords) {
     /** Draw room **/
     this.draw = function() {
         var helper = this;
+        var coor = this.coords
+        if(this.inner != undefined) 
+            coor = [this.coords, this.inner];
         
-        if(this.inner) 
-            this.coords = [this.coords, this.inner];
-        
-        this.polygon = new L.Polygon(this.coords, {
+        this.polygon = new L.Polygon(coor, {
             smoothFactor: 0.2,
             clickable: this.clickable(),
             weight: this.weight(),
