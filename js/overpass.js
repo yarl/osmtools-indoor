@@ -216,7 +216,7 @@ api.parseBuilding = function(data) {
             
             if(key == "buildingpart") way.type = value;
             
-            if(key == "shop" && value.match(/(bag|boutique|clothes|cosmetics|jewelry|shoes)/))
+            if(key == "shop" && value.match(/(bag|boutique|clothes|cosmetics|jewelry|perfumery|shoes)/))
                 way.category = "Fashion";
             if(key == "shop" && value.match(/(antiques|art|bathroom_furnishing|bed|carpet|curtain|doityourself|furniture|hardware|interior_decoration|kitchen|pet)/))
                 way.category = "Home";
@@ -228,7 +228,7 @@ api.parseBuilding = function(data) {
                 way.category = "Food";
             if((key == "amenity" && value.match(/(bureau_de_change|post_office)/)) || (key == "shop" && value.match(/(books|dry_cleaning|gift)/)) || (key == "service"))
                 way.category = "Service";
-            if(key == "amenity" && value.match(/(cafe|fast_food|food_court|ice_cream|pub|restaurant)/))
+            if(key == "amenity" && value.match(/(cafe|confectionery|fast_food|food_court|ice_cream|pub|restaurant)/))
                 way.category = "Gastronomy";
             if(key == "shop" && value.match(/(bicycle|dive|outdoor|sports)/))
                 way.category = "Sport";
