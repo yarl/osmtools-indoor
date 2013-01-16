@@ -138,10 +138,35 @@ $translation = array(
         'it' => 'Modifica in JOSM',
         'pl' => 'Edytuj w JOSM'
     ),
+  
     'Close' => array(
         'fr' => 'Fermer',
         'it' => 'Chiudi',
         'pl' => 'Zamknij',
+    ),
+
+    'email' => array(
+      'fr' => 'mél',
+      'it' => 'email',
+      'pl' => 'email',
+    ),
+  
+    'fax' => array(
+      'fr' => 'fax',
+      'it' => 'fax',
+      'pl' => 'fax',
+    ),
+  
+    'phone' => array(
+      'fr' => 'tél',
+      'it' => 'tel',
+      'pl' => 'tel',
+    ),
+  
+    'website' => array(
+      'fr' => 'site',
+      'it' => 'sito',
+      'pl' => 'www',
     ),
 
     /* 
