@@ -186,6 +186,7 @@ building.room = function(id, coords) {
     this.shop;      // value of amenity=* or shop=*
     this.access;
     this.contact = {};
+    this.opening_hours;
     
     this.polygon;
     
@@ -238,17 +239,38 @@ building.room = function(id, coords) {
             }
           
             window_text += "<h5><?php echo __('Contact'); ?></h5>\n";
-            window_text += "<ul>";
+            window_text += "<ul>\n";
             $.each(this.contact,function(key,value){
                 if(key == 'website') {
-                    value = '<a href="'+value+'">'+value+'<a>';
+                    value = '<a href="'+value+'">'+value+'</a>';
                 } else if(key == 'email') {
-                    value = '<a href="mailto:'+value+'">'+value+'<a>';
+                    value = '<a href="mailto:'+value+'">'+value+'</a>';
                 }
 
-                window_text += "<li>" + (keys_translated[key] != undefined ? keys_translated[key] : key) + ": "+ value + "</li>";
+                window_text += "<li>" + (keys_translated[key] != undefined ? keys_translated[key] : key) + ": "+ value + "</li>\n";
             });
-            window_text += "</ul>";
+            window_text += "</ul>\n";
+        }
+        
+        //Process opening_hours key
+        if(this.opening_hours != null) {
+            var oh = new window.opening_hours(this.opening_hours);
+            var now = new Date();
+            var from = new Date(now.getFullYear(),now.getMonth(),now.getDate());
+            var to = new Date(from.getTime() + 7 * 24 * 60 * 60 * 1000);
+            var opening_hours = oh.getOpenIntervals(from,to);
+            
+            if(!$.isEmptyObject(opening_hours)) {
+                window_text += "<h5><?php echo __('Opening hours'); ?></h5>\n";
+                window_text += "<ul>\n";
+                $.each(opening_hours,function(key,value) {
+                    window_text += "<li>" 
+                                + $.format.date(value[0],'dd.MM.yyyy HH:mm') + " - "
+                                + $.format.date(value[1],'HH:mm')
+                                + "</li>";
+                });
+                window_text += "</ul>\n";
+            }
         }
       
         
