@@ -238,6 +238,9 @@ api.parseBuilding = function(data) {
             if(key == "shop" && way.shop == null) way.shop = value;
             if(key == "amenity" && way.shop == null) way.shop = value;
             if(key == "leisure" && way.shop == null) way.shop = value;
+            
+            if(key.match(/^contact:/)) way.contact[key.split(':')[1]] = value;
+            
         }); 
 
         ways[$(this).attr("id")] = way;
