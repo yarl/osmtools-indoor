@@ -241,9 +241,9 @@ building.room = function(id, coords) {
             window_text += "<ul>";
             $.each(this.contact,function(key,value){
                 if(key == 'website') {
-                    value = '<a href="'+value+'">'+value+'<a>';
+                    value = '<a href="'+value+'">'+value+'</a>';
                 } else if(key == 'email') {
-                    value = '<a href="mailto:'+value+'">'+value+'<a>';
+                    value = '<a href="mailto:'+value+'">'+value+'</a>';
                 }
 
                 window_text += "<li>" + (keys_translated[key] != undefined ? keys_translated[key] : key) + ": "+ value + "</li>";
