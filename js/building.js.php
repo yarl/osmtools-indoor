@@ -185,6 +185,7 @@ building.room = function(id, coords) {
     this.category;  // fashion,home,health...
     this.shop;      // value of amenity=* or shop=*
     this.access;
+    this.contact = {};
     
     this.polygon;
     
@@ -223,7 +224,35 @@ building.room = function(id, coords) {
     
     this.modal = function() {
         $('#indoor-window-header').html(this.name);
-        $('#indoor-window-text').html("<h4><?php echo __('Type'); ?></h4>" + building.types[this.category]);
+      
+        // Text to be displayed in modal window
+        var window_text = "<h4><?php echo __('Type'); ?></h4>" + building.types[this.category];
+                
+        // Process contact:* keys
+        if(!$.isEmptyObject(this.contact)) {
+            var keys_translated = {
+                email:    '<?php echo __('email'); ?>',
+                fax:      '<?php echo __('fax'); ?>',
+                phone:    '<?php echo __('phone'); ?>',
+                website:  '<?php echo __('website'); ?>',
+            }
+          
+            window_text += "<h5><?php echo __('Contact'); ?></h5>\n";
+            window_text += "<ul>";
+            $.each(this.contact,function(key,value){
+                if(key == 'website') {
+                    value = '<a href="'+value+'">'+value+'<a>';
+                } else if(key == 'email') {
+                    value = '<a href="mailto:'+value+'">'+value+'<a>';
+                }
+
+                window_text += "<li>" + (keys_translated[key] != undefined ? keys_translated[key] : key) + ": "+ value + "</li>";
+            });
+            window_text += "</ul>";
+        }
+      
+        
+        $('#indoor-window-text').html(window_text);
         $("#indoor-window-link").attr("href", "http://www.openstreetmap.org/browse/way/" + this.id);
 
         var href = "http://localhost:8111/load_and_zoom";
