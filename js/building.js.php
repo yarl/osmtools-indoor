@@ -341,7 +341,7 @@ building.poi = function(id, coords, type, name) {
             case 'atm' : return 'img/pois/atm.png';
             case 'office' : return 'img/pois/info.png';
             case 'telephone' : return 'img/pois/tel.png';
-            case 'vending_mashine' : return 'img/pois/vmashine.png';
+            case 'vending_machine' : return 'img/pois/vmachine.png';
             default : return null;
         }
     }
