@@ -241,6 +241,8 @@ api.parseBuilding = function(data) {
             
             if(key.match(/^contact:/)) way.contact[key.split(':')[1]] = value;
             
+            if(key == "opening_hours") way.opening_hours = value;
+            
         }); 
 
         ways[$(this).attr("id")] = way;
