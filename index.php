@@ -44,6 +44,7 @@
     
     <script src="js/jquery-latest.js"></script>
     <script src="js/jquery.cookie.js"></script>
+    <script src="js/jquery.dateFormat-1.0.js"></script>
   </head>
 
   <body>  
@@ -165,6 +166,7 @@
     </div> <!-- /container -->
     
     <script src="js/start.js"></script>
+    <script src="js/opening_hours.js/opening_hours.js"></script>
     <?php include('js/building.js.php'); ?>
     <script src="js/overpass.js"></script>
     <script src="js/bootstrap.min.js"></script>

@@ -89,6 +89,21 @@
     height: 100%;
 }
 
+
+/*
+* Opening hours list
+*/
+
+.opening_hours-datelist .closed {    
+    color: red;
+    padding-left: 15px;
+}
+
+.opening_hours-datelist .open {    
+    color: green;
+    padding-left: 15px;
+}
+
 /*
 * List - webkit scrollbar
 */

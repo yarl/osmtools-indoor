@@ -186,6 +186,7 @@ building.room = function(id, coords) {
     this.shop;      // value of amenity=* or shop=*
     this.access;
     this.contact = {};
+    this.opening_hours;
     
     this.polygon;
     
@@ -237,8 +238,8 @@ building.room = function(id, coords) {
                 website:  '<?php echo __('website'); ?>',
             }
           
-            window_text += "<h5><?php echo __('Contact'); ?></h5>\n";
-            window_text += "<ul>";
+            window_text += '<h5><?php echo __('Contact'); ?></h5>\n';
+            window_text += '<ul>\n';
             $.each(this.contact,function(key,value){
                 if(key == 'website') {
                     value = '<a href="'+value+'">'+value+'</a>';
@@ -246,9 +247,42 @@ building.room = function(id, coords) {
                     value = '<a href="mailto:'+value+'">'+value+'</a>';
                 }
 
-                window_text += "<li>" + (keys_translated[key] != undefined ? keys_translated[key] : key) + ": "+ value + "</li>";
+                window_text += '<li>' + (keys_translated[key] != undefined ? keys_translated[key] : key) + ': '+ value + '</li>\n';
             });
-            window_text += "</ul>";
+            window_text += '</ul>\n';
+        }
+        
+        //Process opening_hours key
+        if(this.opening_hours != null) {
+            window_text += '<h5><?php echo __('Opening hours'); ?></h5>\n';
+            var oh = new window.opening_hours(this.opening_hours);
+            var now = new Date();
+            var from = new Date(now.getFullYear(),now.getMonth(),now.getDate());
+            var to = new Date(from.getTime() + 24 * 60 * 60 * 1000);
+            
+            window_text += '<ul class="opening_hours-datelist">\n';
+            //We'll display opening hours for 7 days starting today
+            for(var i = 0; i <= 6; i++) {
+                window_text += '<li><span>' + $.format.date(from,'<?php echo __('dd/MM/yyyy'); ?>') + '</span>';
+                var opening_hours = oh.getOpenIntervals(from,to);
+                if(!$.isEmptyObject(opening_hours)) {
+                    $.each(opening_hours,function(key,value) {
+                        window_text += '<span class="open">' 
+                                    + $.format.date(value[0],'<?php echo __('hh:mm a'); ?>') 
+                                    + ' - '
+                                    + $.format.date(value[1],'<?php echo __('hh:mm a'); ?>')
+                                    + '</span>';
+                    });
+                } else {
+                    window_text += '<span class="closed"><?php echo __('closed'); ?></span>\n';
+                }
+                window_text += '</li>\n';
+                
+                // move to next day
+                from = to;
+                to = new Date(from.getTime() + 24 * 60 * 60 * 1000);
+            }
+            window_text += '</ul>';
         }
       
         
@@ -341,7 +375,7 @@ building.poi = function(id, coords, type, name) {
             case 'atm' : return 'img/pois/atm.png';
             case 'office' : return 'img/pois/info.png';
             case 'telephone' : return 'img/pois/tel.png';
-            case 'vending_mashine' : return 'img/pois/vmashine.png';
+            case 'vending_machine' : return 'img/pois/vmachine.png';
             default : return null;
         }
     }

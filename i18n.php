@@ -144,6 +144,10 @@ $translation = array(
         'it' => 'Chiudi',
         'pl' => 'Zamknij',
     ),
+    
+    /*
+     * Contacts section
+     */
 
     'email' => array(
       'fr' => 'mél',
@@ -167,6 +171,36 @@ $translation = array(
       'fr' => 'site',
       'it' => 'sito',
       'pl' => 'www',
+    ),
+    
+    /*
+     * Opening hours section
+     */
+    
+    'Opening hours' => array(
+      'fr' => 'site',
+      'it' => 'sito',
+      'pl' => 'Godziny otwarcia',
+    ),
+    
+    'closed' => array(
+      'fr' => 'fermé',
+      'it' => 'chiuso',
+      'pl' => 'zamknięte',
+    ),
+    
+    // date format as used by jquery-dateFormat plugin: http://archive.plugins.jquery.com/project/jquery-dateFormat
+    'dd/MM/yyyy' => array(
+      'fr' => 'dd-MM-yyyy',
+      'it' => 'dd/MM/yyyy',
+      'pl' => 'dd.MM.yyyy',
+    ),
+    
+    // time format as used by jquery-dateFormat plugin: http://archive.plugins.jquery.com/project/jquery-dateFormat
+    'hh:mm a' => array(
+      'fr' => 'HH:mm',
+      'it' => 'HH:mm',
+      'pl' => 'HH:mm',
     ),
 
     /* 
@@ -193,4 +227,3 @@ $translation = array(
         'pl' => 'brak nazwy'
     )
 );
-?>
