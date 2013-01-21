@@ -239,7 +239,18 @@ api.parseBuilding = function(data) {
             if(key == "amenity" && way.shop == null) way.shop = value;
             if(key == "leisure" && way.shop == null) way.shop = value;
             
+            // key contact:[email|fax|phone|website]
             if(key.match(/^contact:/)) way.contact[key.split(':')[1]] = value;
+            
+            //contact data without contact: prefix
+            if(key == "email") 
+                way.contact.email = value;
+            if(key == "fax") 
+                way.contact.fax = value;
+            if(key == "phone") 
+                way.contact.phone = value;
+            if(key == "website") 
+                way.contact.website = value;
             
             if(key == "opening_hours") way.opening_hours = value;
             
