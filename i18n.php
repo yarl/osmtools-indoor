@@ -179,7 +179,6 @@ $translation = array(
      */
     
     'Opening hours' => array(
-      'fr' => 'site',
       'it' => 'Orari di apertura',
       'pl' => 'Godziny otwarcia',
     ),

@@ -120,7 +120,7 @@ building.building = function(id, name, levels) {
         map.setView(room.center(room), map.getZoom());
         L.popup()
             .setLatLng(room.center(room))
-            .setContent('<span style="color:'+ room.color(room) +'">■</span> ' + room.name)
+            .setContent(room.label())
             .openOn(map);
     }
 }
@@ -139,9 +139,9 @@ building.level = function(id, level, rooms) {
     this.list = function() {
         this.rooms.sort(function(a, b) {
             var nameA, nameB;
-            if(a.name == null) nameA = "?";
+            if(a.name == null) nameA = "~";
                 else nameA=a.name.toLowerCase();
-            if(b.name == null) nameB = "?";
+            if(b.name == null) nameB = "~";
                 else nameB=b.name.toLowerCase();
 
             if (nameA < nameB) return -1;
@@ -151,9 +151,9 @@ building.level = function(id, level, rooms) {
         
         var txt = '';
         for(var i in this.rooms)
-            if(this.rooms[i] != null && this.rooms[i].name != null)
+            if(this.rooms[i] != null && this.rooms[i].label() != null)
                 if(api.building.currentType == 'All' || this.rooms[i].category == api.building.currentType) 
-                    txt += '<div class="indoor-list-room" onclick="api.building.popup('+this.id+','+i+')"><span style="color:'+ this.rooms[i].color(this.rooms[i], 'All') +'">■</span> ' + this.rooms[i].name + '</div>';
+                    txt += '<div class="indoor-list-room" onclick="api.building.popup('+this.id+','+i+')">' + this.rooms[i].label() + '</div>';
         if(txt == '') {
             if(api.building.currentType == 'All')
                 txt += '<em><?php echo __('Empty floor'); ?></em>';
@@ -180,6 +180,7 @@ building.room = function(id, coords) {
     this.id = id;
     this.coords = coords;
     this.name;
+    this.ref;
     
     this.type;      // corridor,room...
     this.category;  // fashion,home,health...
@@ -204,7 +205,7 @@ building.room = function(id, coords) {
             color: this.color(),
             fillOpacity: 0.4
         })
-        .bindLabel('<span style="color:'+ this.color() +'">■</span> ' + this.name)
+        .bindLabel(this.label())
         .addTo(api.layer.building)
         .on('click', function() { helper.modal(); });
         if(this.type == "corridor") this.polygon.bringToBack();
@@ -212,15 +213,24 @@ building.room = function(id, coords) {
         for(var i in this.coords) {
             if(this.coords[i].door != null) {
                 new L.circleMarker(this.coords[i], {
-                    weight: 1,
+                    radius: 2,
+                    weight: 2,
                     clickable: false,
                     color: '#666',
                     fillOpacity: 0.8
                 })
-                .setRadius(1)
                 .addTo(api.layer.building);
             }
         }
+    }
+    
+    //formatted label
+    this.label = function() {
+        if(this.name == undefined && this.ref != undefined)
+            return '<span style="color:'+ this.color() +'">■</span> #' + this.ref;
+        if(this.name != undefined)
+            return '<span style="color:'+ this.color() +'">■</span> ' + this.name;
+        return null;
     }
     
     this.modal = function() {
@@ -235,7 +245,7 @@ building.room = function(id, coords) {
                 email:    '<?php echo __('email'); ?>',
                 fax:      '<?php echo __('fax'); ?>',
                 phone:    '<?php echo __('phone'); ?>',
-                website:  '<?php echo __('website'); ?>',
+                website:  '<?php echo __('website'); ?>'
             }
           
             window_text += '<h5><?php echo __('Contact'); ?></h5>\n';
@@ -324,7 +334,7 @@ building.room = function(id, coords) {
             }
                 
         }
-        return '#000';
+        return '#aaa';
     }
      
     /** Click or not **/

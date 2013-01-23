@@ -211,8 +211,8 @@ api.parseBuilding = function(data) {
             var value = $(this).attr("v");
             if(key == "name") way.name = value;
             if(key == "access") way.access = value;
-            if(key == "ref")
-                (way.name === undefined) ? way.name = '['+value+']' : way.name = '['+value+'] '+way.name;
+            if(key == "ref") way.ref = value;
+                //(way.name === undefined) ? way.name = '['+value+']' : way.name = '['+value+'] '+way.name;
             
             if(key == "buildingpart") way.type = value;
             
@@ -243,19 +243,13 @@ api.parseBuilding = function(data) {
             if(key.match(/^contact:/)) way.contact[key.split(':')[1]] = value;
             
             //contact data without contact: prefix
-            if(key == "email") 
-                way.contact.email = value;
-            if(key == "fax") 
-                way.contact.fax = value;
-            if(key == "phone") 
-                way.contact.phone = value;
-            if(key == "website") 
-                way.contact.website = value;
-            
+            if(key == "email")      way.contact.email = value;
+            if(key == "fax")        way.contact.fax = value;
+            if(key == "phone")      way.contact.phone = value;
+            if(key == "website")    way.contact.website = value;
             if(key == "opening_hours") way.opening_hours = value;
             
         }); 
-
         ways[$(this).attr("id")] = way;
     });
     
