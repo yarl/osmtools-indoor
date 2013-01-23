@@ -120,6 +120,7 @@ $translation = array(
         'pl' => 'Puste piętro'
     ),
     'None on this floor' => array(
+        'it' => 'Niente su questo piano',
         'pl' => 'Brak na piętrze'
     ), 
     
@@ -179,7 +180,7 @@ $translation = array(
     
     'Opening hours' => array(
       'fr' => 'site',
-      'it' => 'sito',
+      'it' => 'Orari di apertura',
       'pl' => 'Godziny otwarcia',
     ),
     
@@ -224,6 +225,7 @@ $translation = array(
      * -------------------------------------------------------------------------
      */
     'no name' => array(
+        'it' => 'senza nome',
         'pl' => 'brak nazwy'
     )
 );
