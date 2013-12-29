@@ -40,6 +40,9 @@ $translation = array(
         'it' => 'Mappa',
         'pl' => 'Mapa'
     ),
+    'Click to load buildings' => array(
+        'pl' => 'Kliknij aby załadować budynki'
+    ),
     '<strong>Zoom in</strong> to load buildings' => array(
         'fr' => '<strong>Zoomer</strong> pour charger les bâtiments',
         'it' => '<strong>Ingrandisci lo zoom</strong> per caricare gli edifici',
