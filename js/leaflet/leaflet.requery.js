@@ -24,7 +24,7 @@
   L.Control.Requery = L.Control.extend({
     options: {
       position: 'topleft',
-      text: 'Seach area'
+      text: 'Search area'
     },
     onAdd: function(map) {
       var container = L.DomUtil.create('div', 'leaflet-control-requery leaflet-bar');
