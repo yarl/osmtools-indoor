@@ -20,6 +20,9 @@ layers.osmapa = new L.tileLayer(
 layers.osm = new L.tileLayer(
     'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
     { attribution: layers.attrib, maxZoom: 18, opacity:0.8 });
+layers.hot = new L.tileLayer(
+    'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
+    { attribution: layers.attrib, maxZoom: 20, opacity:0.7 });
 
 /**
  * INIT
@@ -31,7 +34,7 @@ $(document).ready(function() {
         center: [localStorage['indoor-lat'] !== undefined ? localStorage['indoor-lat'] : 52.019,
                 localStorage['indoor-lng'] !== undefined ? localStorage['indoor-lng'] : 20.676],
         zoom: localStorage['indoor-zoom'] !== undefined ? localStorage['indoor-zoom'] : 6,
-        layers: [layers.skobbler, api.layer.outlines],
+        layers: [layers.hot, api.layer.outlines],
         minZoom: 3,
         attributionControl: false
     });
